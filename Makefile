@@ -1,13 +1,17 @@
 PLAT = Unix
 
 ifeq ($(PLAT), Unix)
-	EXTERN = "extern/unix/"
-	FLAGS += -reference:"$(EXTERN)/MonoGame.Framework"
+	EXTERN = extern/unix
+	FLAGS += -reference:"$(EXTERN)/MonoGame.Framework" -reference:"$(EXTERN)/Tao.Sdl.dll"
 	POST = cp $(EXTERN)/*.dll .
 endif
 
-all: jump.exe
+all: run
 
-jump.exe:
-	@gmcs jump.cs $(FLAGS)
+Jump.exe:
+	mcs $(FLAGS) Jump.cs
 
+run: Jump.exe
+	$(POST);
+	mono ./Jump.exe
+	rm *.dll
