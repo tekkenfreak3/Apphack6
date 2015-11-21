@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AppHack6
+namespace JumpGame
 {
-	public class Block
+	public class Block : JumpSprite
 	{
+		private Jump game;
 		private Texture2D texture = null;
 		private Vector2 size;
 		private Vector2 location;
@@ -15,8 +16,9 @@ namespace AppHack6
 		private int fallSpeed;
 		private int leftOverTime = 0;
 
-		public Block(int x, int y, int width, int height, Color color, int fallSpeed)
+		public Block(Jump game, int x, int y, int width, int height, Color color, int fallSpeed) : base(game)
 		{
+			this.game = game;
 			size = new Vector2(width, height);
 			location = new Vector2(x, y);
 			this.color = color;
@@ -35,22 +37,22 @@ namespace AppHack6
 			set;
 		}
 
-		public void Draw(GraphicsDeviceManager g, SpriteBatch spriteBatch)
+		public override void Draw(GameTime ft)
 		{
 			if (texture == null)
 			{
-				CreateTexture((int)size.X, (int)size.Y, g);
+				CreateTexture((int)size.X, (int)size.Y, game.graphics);
 			}
-			
-			spriteBatch.Draw(texture, location, color);
+
+			game.batch.Draw(texture, location, color);
 		}
 
-		public void Update(GameTime gt)
+		public override void Update(GameTime gt)
 		{
 			int dropAmount = (gt.ElapsedGameTime.Milliseconds + leftOverTime)/fallSpeed;
 			leftOverTime = gt.ElapsedGameTime.Milliseconds % fallSpeed;
 
-			Console.WriteLine("Update called: " + dropAmount);
+			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
 
 			location = new Vector2(location.X, location.Y + dropAmount);
 		}
