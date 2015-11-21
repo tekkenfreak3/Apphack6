@@ -3,23 +3,35 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace JumpGame
 {
 	public class HighScoresWindow : DrawableGameComponent
 	{
 		private const string FILEPATH = "Highscores.txt";
+		private Keys[] keyArray;
+
 		private Jump game;
-		private Text gameText1, gameText2;
+		private Text gameText1, gameText2, nameText;
 		private List<HighscoreEntry> highScores = new List<HighscoreEntry>();
 		private Texture2D background1, background2, highscoreTile;
-		private Vector2 position1, position2;
+		private Texture2D nameBack1, nameBack2;
+		private Vector2 position1, position2, namePos1, namePos2;
+		private Keys lastKey;
+		private bool state1 = true;
 		
 		public HighScoresWindow(Jump game) : base(game)
 		{
 			this.game = game;
 			position1 = new Vector2(312, 84);
 			position2 = new Vector2(327, 99);
+		}
+
+		public bool Active
+		{
+			get;
+			set;
 		}
 
 		public void AddHighscoreEntry(HighscoreEntry entry)
@@ -34,9 +46,21 @@ namespace JumpGame
 		
 		protected override void LoadContent()
 		{
+			Active = true;//For t esting.
+
+			keyArray = new Keys[]
+			{
+				Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K, Keys.L, Keys.M,
+				Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V, Keys.X, Keys.Y, Keys.Z
+			};
+
 			LoadHighScores();
 			background1 = CreateTexture(400, 600, game.graphics);
 			background2 = CreateTexture(370, 570, game.graphics);
+			nameBack1 = CreateTexture(400, 200, game.graphics);
+			namePos1 = new Vector2(312, 284);
+			nameBack2 = CreateTexture(370, 170, game.graphics);
+			namePos2 = new Vector2(327, 299);
 			highscoreTile = CreateTexture(370, 52, game.graphics);
 			gameText1 = new Text(game, "", new Vector2(), Color.White);
 			gameText1.OtherLoadContent("HighJakarta_22");
@@ -46,10 +70,54 @@ namespace JumpGame
 
 		public override void Update(GameTime gt)
 		{
-			//Handles animation
+			if (!state1 || !Active)
+				return;
+			
+			KeyboardState state = Keyboard.GetState();
+			Keys[] pressedKeys = state.GetPressedKeys();
+
+			if (pressedKeys.Length == 1)
+			{
+				if (lastKey != pressedKeys[0])
+				{
+					lastKey = pressedKeys[0];
+
+					for (int i = 0; i < keyArray.Length; i++)
+					{
+						if (keyArray[i] == lastKey)
+						{
+							Console.WriteLine("Key Pressed: " + keyArray[i]);
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				lastKey = Keys.Add;
+			}
 		}
 
 		public override void Draw(GameTime gt)
+		{
+			if (!Active)
+				return;
+
+			if (state1)
+				DrawStateOne(gt);
+			else
+				DrawStateTwo(gt);
+		}
+
+		private void DrawStateOne(GameTime gt)
+		{
+			game.batch.Begin();
+			game.batch.Draw(nameBack1, namePos1, Color.Black);
+			game.batch.Draw(nameBack2, namePos2, Color.Blue);
+			game.batch.End();
+		}
+
+		private void DrawStateTwo(GameTime gt)
 		{
 			game.batch.Begin();
 			game.batch.Draw(background1, position1, Color.Black);
@@ -58,14 +126,18 @@ namespace JumpGame
 			int stepY = 52;
 			int stepX = 327;
 
-			for (int index = 0; index < 9; index++)//index < highScores.Count && 
+			gameText1.Content = "HIGHSCORES";
+			gameText1.Location = new Vector2(445, 135);
+			gameText1.InnerDraw(gt);
+
+			for (int index = 0; index < highScores.Count &&  index < 9; index++)
 			{
 				int curY = 149 + (stepY * (index + 1));
 				game.batch.Draw(highscoreTile, new Vector2(stepX, curY), index % 2 == 0 ? Color.LightGreen : Color.Red);
 				gameText1.Location = new Vector2(stepX + 25, curY + 10);
-				gameText1.Content = (index + 1) + " " + "9999" + " " + "Nathan Michalski";//highScores[index].Name;
+				gameText1.Content = (index + 1) + "  " + highScores[index].Score + "  " + highScores[index].Name;
 				if (gameText1.Content.Length > 28)
-					gameText1.Content = gameText1.Content.Substring(0, 20);
+					gameText1.Content = gameText1.Content.Substring(0, 28);
 				gameText1.InnerDraw(gt);
 			}
 
