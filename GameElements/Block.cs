@@ -8,12 +8,14 @@ namespace JumpGame
 	public class Block : JumpSprite
 	{
 		private Color color;
+		private Block partner = null;
 
 		//Speed is pixels per second.
 		private int xSpeed = 0;
 	    private int ySpeed = 0;
 		private int leftOverTimeX = 0;
 		private int leftOverTimeY = 0;
+		private bool hit = false;
         
 		public Block(Jump game, ILevel level, Rectangle blockRect, Color color, int ySpeed) : base(game)
 		{
@@ -34,15 +36,36 @@ namespace JumpGame
             this.level = level;
 		}
 
-		public bool Hit
-		{
-			get;
-			set;
-		}
-
 		protected override void LoadContent()
 		{
 			CreateTexture(rect.Width, rect.Height, game.graphics);
+		}
+
+		public void Hit()
+		{
+			if (partner != null)
+			{
+				if (partner.hit || hit)
+				{
+					
+				}
+				else
+				{
+					//Handle new hit
+				}
+			}
+			else if (!hit)
+			{
+				//handle new hit
+			}
+
+			hit = true;
+		}
+
+		public void SetPartner(Block partnerBlock)
+		{
+			partner = partnerBlock;
+			partnerBlock.partner = this;
 		}
 
 		public override void Update(GameTime gt)
