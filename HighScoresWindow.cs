@@ -13,7 +13,7 @@ namespace JumpGame
 		private Keys[] keyArray;
 
 		private Jump game;
-		private Text gameText1, gameText2, nameText;
+		private Text gameText1, gameText2, enterNameText, nameText;
 		private List<HighscoreEntry> highScores = new List<HighscoreEntry>();
 		private Texture2D background1, background2, highscoreTile;
 		private Texture2D nameBack1, nameBack2;
@@ -62,6 +62,8 @@ namespace JumpGame
 			nameBack2 = CreateTexture(370, 170, game.graphics);
 			namePos2 = new Vector2(327, 299);
 			highscoreTile = CreateTexture(370, 52, game.graphics);
+			enterNameText = new Text(game, "ENTER YOUR NAME:", new Vector2 (385, 300), Color.White);
+			enterNameText.OtherLoadContent("HighJakarta_22");
 			gameText1 = new Text(game, "", new Vector2(), Color.White);
 			gameText1.OtherLoadContent("HighJakarta_22");
 			gameText2 = new Text(game, "", new Vector2 (), Color.White);
@@ -114,6 +116,7 @@ namespace JumpGame
 			game.batch.Begin();
 			game.batch.Draw(nameBack1, namePos1, Color.Black);
 			game.batch.Draw(nameBack2, namePos2, Color.Blue);
+			enterNameText.InnerDraw(gt);
 			game.batch.End();
 		}
 
