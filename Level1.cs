@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,8 +20,8 @@ namespace JumpGame
         private int tilNext;
         private int speed;
         private Random rng;
-        private Song music;
-        
+        private SoundEffect music;
+        private SoundEffectInstance musicInstance;
         public Level1(Jump game)
         {
             this.game = game;
@@ -40,10 +41,11 @@ namespace JumpGame
             blocks.Add(floor);
             game.Components.Add(floor);
 
-            music = this.game.Content.Load<Song>("bamboo");
-            MediaPlayer.Play(music);
-            MediaPlayer.Volume = 1.0f;
-            
+            music = this.game.Content.Load<SoundEffect>("bamboo");
+
+            musicInstance = music.CreateInstance();
+            musicInstance.IsLooped = true;
+            musicInstance.Play();
         }
 
         public List<Block> GetBlocks()
