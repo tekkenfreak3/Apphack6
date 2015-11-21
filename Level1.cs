@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace JumpGame
 {
@@ -18,6 +19,7 @@ namespace JumpGame
         private int tilNext;
         private int speed;
         private Random rng;
+        private Song music;
         
         public Level1(Jump game)
         {
@@ -37,6 +39,10 @@ namespace JumpGame
             Block floor = new Block(game, this, new Rectangle(-32, 0, 1024 + 64, 32), Color.RoyalBlue, this.speed);
             blocks.Add(floor);
             game.Components.Add(floor);
+
+            music = this.game.Content.Load<Song>("bamboo_cactus");
+            MediaPlayer.Play(music);
+            MediaPlayer.IsRepeating = true;
         }
 
         public List<Block> GetBlocks()
@@ -52,7 +58,7 @@ namespace JumpGame
             {
                 
                 Block b1 = new Block(game, this, new Rectangle(-32, -30, rng.Next(1024), 24), Color.RoyalBlue, this.speed);
-                Block b2 = new Block(game, this, new Rectangle(b1.rect.X + b1.rect.Width + 48, -30, 1024, 24), Color.RoyalBlue, this.speed);
+                Block b2 = new Block(game, this, new Rectangle(b1.rect.X + b1.rect.Width + 64, -30, 1024, 24), Color.RoyalBlue, this.speed);
 
                 b1.SetPartner(b2);
                 this.blocks.Add(b1);
