@@ -68,7 +68,7 @@ namespace JumpGame
                 Rectangle leftRect = new Rectangle(this.rect.X + this.xSpeed, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle rightRect = new Rectangle((this.rect.X + this.rect.Width) + this.xSpeed - 16, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle topRect = new Rectangle(this.rect.X + 8, this.rect.Y + this.ySpeed, this.rect.Width - 16, 16);
-                Rectangle bottomRect = new Rectangle(this.rect.X + 8, this.rect.Y  + this.rect.Height + this.ySpeed, this.rect.Width - 16, 16);
+                Rectangle bottomRect = new Rectangle(this.rect.X, this.rect.Y  + this.rect.Height + this.ySpeed, this.rect.Width, 16);
                 
                 if (JumpSprite.RectCollides(rightRect, other))
                 {

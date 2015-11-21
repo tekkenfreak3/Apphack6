@@ -41,7 +41,7 @@ namespace JumpGame
             blocks.Add(floor);
             game.Components.Add(floor);
 
-            music = this.game.Content.Load<SoundEffect>("bamboo");
+            music = this.game.Content.Load<SoundEffect>("home_at_last");
 
             musicInstance = music.CreateInstance();
             musicInstance.IsLooped = true;
@@ -61,16 +61,16 @@ namespace JumpGame
             {
                 
                 Block newBlock = new Block(game, this, new Rectangle(1024, 760
-                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 500))
-                                                                     , 48, 768),
+                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 250))
+                                                                     , 4 + rng.Next(46), 768),
                                            Color.Cyan, this.speed, 0);
                 blocks.Add(newBlock);
                 game.Components.Add(newBlock);
-                this.tilNext = rng.Next(120) + 50;
+                this.tilNext = rng.Next(100) + 50;
                 this.spawnInterval = this.tilNext;
             }
 
-            if (this.ticks % 1000 == 0)
+            if (this.ticks % 300 == 0)
             {
                 if (this.speed < -256)
                 {
