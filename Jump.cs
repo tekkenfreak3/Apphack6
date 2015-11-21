@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using AppHack6;
 
 namespace JumpGame
 {
@@ -67,7 +66,6 @@ namespace JumpGame
             }
             
             OnKeyboard (new KeyboardStateEventArgs(keystate));
-			block.Update(gt);
 
             base.Update(gt);
         }

@@ -39,10 +39,22 @@ namespace JumpGame
             {
                 this.xSpeed = 5;
             }
-
             else
             {
                 this.xSpeed = 0;
+            }
+
+            if (st.IsKeyDown(Keys.Up))
+            {
+                this.ySpeed = -5;
+            }
+            else if (st.IsKeyDown(Keys.Down))
+            {
+                this.ySpeed = 5;
+            }
+            else
+            {
+                this.ySpeed = 0;
             }
         }
 
