@@ -10,8 +10,9 @@ namespace JumpGame
 	{
 		private const string FILEPATH = "Highscores.txt";
 		private Jump game;
+		private Text gameText1, gameText2;
 		private List<HighscoreEntry> highScores = new List<HighscoreEntry>();
-		private Texture2D background1, background2;
+		private Texture2D background1, background2, highscoreTile;
 		private Vector2 position1, position2;
 		
 		public HighScoresWindow(Jump game) : base(game)
@@ -36,6 +37,11 @@ namespace JumpGame
 			LoadHighScores();
 			background1 = CreateTexture(400, 600, game.graphics);
 			background2 = CreateTexture(370, 570, game.graphics);
+			highscoreTile = CreateTexture(370, 52, game.graphics);
+			gameText1 = new Text(game, "", new Vector2(), Color.White);
+			gameText1.OtherLoadContent("HighJakarta_22");
+			gameText2 = new Text(game, "", new Vector2 (), Color.White);
+			gameText2.OtherLoadContent("HighJakarta_22");
 		}
 
 		public override void Update(GameTime gt)
@@ -48,6 +54,22 @@ namespace JumpGame
 			game.batch.Begin();
 			game.batch.Draw(background1, position1, Color.Black);
 			game.batch.Draw(background2, position2, Color.Blue);
+
+			int stepY = 52;
+			int stepX = 327;
+
+			for (int index = 0; index < 9; index++)//index < highScores.Count && 
+			{
+				int curY = 149 + (stepY * (index + 1));
+				game.batch.Draw(highscoreTile, new Vector2(stepX, curY), index % 2 == 0 ? Color.LightGreen : Color.Red);
+				gameText1.Location = new Vector2(stepX + 25, curY + 10);
+				gameText1.Content = (index + 1) + " " + "9999" + " " + "Nathan Michalski";//highScores[index].Name;
+				if (gameText1.Content.Length > 28)
+					gameText1.Content = gameText1.Content.Substring(0, 20);
+				gameText1.InnerDraw(gt);
+			}
+
+
 			game.batch.End();
 		}
 
