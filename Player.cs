@@ -46,7 +46,7 @@ namespace JumpGame
 
             if (st.IsKeyDown(Keys.Up))
             {
-                this.ySpeed = -5;
+                this.ySpeed = -20;
             }
             else if (st.IsKeyDown(Keys.Down))
             {
@@ -69,7 +69,7 @@ namespace JumpGame
                 Rectangle leftRect = new Rectangle(this.rect.X + this.xSpeed, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle rightRect = new Rectangle((this.rect.X + this.rect.Width) + this.xSpeed - 16, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle topRect = new Rectangle(this.rect.X + 8, this.rect.Y + this.ySpeed, this.rect.Width - 16, 16);
-                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed - 16, this.rect.Width - 16, 16);
+                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed - 10, this.rect.Width - 16, 16);
                 
                 if (JumpSprite.RectCollides(rightRect, other))
                 {
@@ -82,16 +82,22 @@ namespace JumpGame
                     this.xSpeed = 0;
                 }
 
-                if (JumpSprite.RectCollides(bottomRect, other))
-                {
-                    this.rect.Y = b.rect.Y - this.rect.Height - 1;
-                    this.ySpeed = 0;
-                }
-                else if (JumpSprite.RectCollides(topRect, other))
+                if (JumpSprite.RectCollides(topRect, other))
                 {
                     this.rect.Y = b.rect.Y + b.rect.Height + 1;
                     this.ySpeed = 0;
                 }
+                else if (JumpSprite.RectCollides(bottomRect, other))
+                {
+                    this.rect.Y = b.rect.Y - this.rect.Height + 1;
+                    this.ySpeed = 0;
+//                    this.xSpeed += b.CalculateX();
+                }
+                else
+                {
+                    this.ySpeed += 5;
+                }
+
             }
         
             this.rect.X += this.xSpeed;
