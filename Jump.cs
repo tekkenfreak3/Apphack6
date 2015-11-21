@@ -35,7 +35,7 @@ namespace JumpGame
 
         protected override void Initialize()
         {
-			Block block = new Block(this, new Rectangle(0, 0, 100, 200), Color.Blue, 20);
+			Block block = new Block(this, new Rectangle(100, 0, 100, 200), Color.Blue, 20);
             player = new Player(this, new Rectangle(512, 384, 32, 32));
             this.Components.Add(player);
             this.Components.Add(block);

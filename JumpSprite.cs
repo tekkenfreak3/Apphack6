@@ -14,7 +14,7 @@ namespace JumpGame
     public abstract class JumpSprite : DrawableGameComponent
     {
         protected Texture2D tex;
-        protected Rectangle rect;
+        public Rectangle rect;
 
         protected Vector2 origin;
         protected float direction;
@@ -59,6 +59,29 @@ namespace JumpGame
 //                    }
 //                }
 //                return false;
+        }
+
+        protected static bool RectCollides(Rectangle first, Rectangle other)
+        {
+            // my x, my y, etc
+            int mx = first.X;
+            int my = first.Y;
+            int mx2 = first.X + first.Width;
+            int my2 = first.Y + first.Height;
+
+            int ox = other.X;
+            int oy = other.Y;
+            int ox2 = other.X + other.Width;
+            int oy2 = other.Y + other.Height;
+            
+            if ((mx <= ox2 && mx2 >= ox) || (ox <= mx2 && ox2 >= mx))
+                {
+                    if ((my <= oy2 && my2 >= oy) || (oy <= my2 && oy2 >= my))
+                    {
+                        return true;
+                    }
+                }
+                return false;
         }
     }
 }

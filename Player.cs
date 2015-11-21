@@ -64,13 +64,36 @@ namespace JumpGame
 
             foreach (Block b in this.game.blocks)
             {
-                if (this.Collides(b))
+                Rectangle other = b.rect;
+                
+                Rectangle leftRect = new Rectangle(this.rect.X + this.xSpeed, this.rect.Y + 8, 16, this.rect.Height - 16);
+                Rectangle rightRect = new Rectangle((this.rect.X + this.rect.Width) + this.xSpeed - 16, this.rect.Y + 8, 16, this.rect.Height - 16);
+                Rectangle topRect = new Rectangle(this.rect.X + 8, this.rect.Y + this.ySpeed, this.rect.Width - 16, 16);
+                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed - 16, this.rect.Width - 16, 16);
+                
+                if (JumpSprite.RectCollides(rightRect, other))
                 {
-                    System.Console.WriteLine("There's a block");
+                    this.rect.X = b.rect.X - this.rect.Width - 1;
                     this.xSpeed = 0;
+                }
+                else if (JumpSprite.RectCollides(leftRect, other))
+                {
+                    this.rect.X = b.rect.X + b.rect.Width + 1;
+                    this.xSpeed = 0;
+                }
+
+                if (JumpSprite.RectCollides(bottomRect, other))
+                {
+                    this.rect.Y = b.rect.Y - this.rect.Height - 1;
+                    this.ySpeed = 0;
+                }
+                else if (JumpSprite.RectCollides(topRect, other))
+                {
+                    this.rect.Y = b.rect.Y + b.rect.Height + 1;
                     this.ySpeed = 0;
                 }
             }
+        
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
         }
