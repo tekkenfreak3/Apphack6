@@ -43,7 +43,8 @@ namespace JumpGame
 
 		public void Hit()
 		{
-			if ((partner != null && !partner.hit && !hit) || (partner == null && !partner.hit))
+			if ((partner != null && !partner.hit && !hit) 
+				|| (partner == null && !hit))
 			{
 				level.AddPoints(xSpeed);
 			}
