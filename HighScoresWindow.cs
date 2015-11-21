@@ -19,7 +19,9 @@ namespace JumpGame
 		private Texture2D nameBack1, nameBack2;
 		private Vector2 position1, position2, namePos1, namePos2;
 		private Keys lastKey;
+		private string input = "";
 		private bool state1 = true;
+		private bool firstInput = false;
 		
 		public HighScoresWindow(Jump game) : base(game)
 		{
@@ -51,7 +53,7 @@ namespace JumpGame
 			keyArray = new Keys[]
 			{
 				Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K, Keys.L, Keys.M,
-				Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V, Keys.X, Keys.Y, Keys.Z
+				Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V, Keys.W, Keys.X, Keys.Y, Keys.Z
 			};
 
 			LoadHighScores();
@@ -62,8 +64,10 @@ namespace JumpGame
 			nameBack2 = CreateTexture(370, 170, game.graphics);
 			namePos2 = new Vector2(327, 299);
 			highscoreTile = CreateTexture(370, 52, game.graphics);
-			enterNameText = new Text(game, "ENTER YOUR NAME:", new Vector2 (385, 300), Color.White);
+			enterNameText = new Text(game, "ENTER YOUR NAME", new Vector2 (415, 310), Color.White);
 			enterNameText.OtherLoadContent("HighJakarta_22");
+			nameText = new Text(game, "Type Your Name", new Vector2 (415, 380), Color.White);
+			nameText.OtherLoadContent("HighJakarta_22");
 			gameText1 = new Text(game, "", new Vector2(), Color.White);
 			gameText1.OtherLoadContent("HighJakarta_22");
 			gameText2 = new Text(game, "", new Vector2 (), Color.White);
@@ -84,12 +88,55 @@ namespace JumpGame
 				{
 					lastKey = pressedKeys[0];
 
-					for (int i = 0; i < keyArray.Length; i++)
+					if (pressedKeys[0] == Keys.Back)
 					{
-						if (keyArray[i] == lastKey)
+						if (!firstInput)
 						{
-							Console.WriteLine("Key Pressed: " + keyArray[i]);
-							break;
+							firstInput = true;
+							nameText.Content = "";
+						}
+						else
+						{
+							if (nameText.Content.Length > 0)
+							{
+								nameText.Content = nameText.Content.Substring(0, nameText.Content.Length - 1);
+							}
+						}
+					}
+					else if (pressedKeys[0] == Keys.Space)
+					{
+						if (!firstInput)
+						{
+							firstInput = true;
+							nameText.Content = "";
+						}
+						else
+						{
+							nameText.Content += " ";
+
+							if (nameText.Content.Length > 35)
+							{
+								nameText.Content = nameText.Content.Substring(0, 35);
+							}
+						}
+					}
+					else
+					{
+						for (int i = 0; i < keyArray.Length; i++)
+						{
+							if (keyArray [i] == lastKey)
+							{
+								if (!firstInput)
+								{
+									firstInput = true;
+									nameText.Content = "";
+								}
+
+								nameText.Content += lastKey + "";
+
+
+								break;
+							}
 						}
 					}
 				}
@@ -111,12 +158,26 @@ namespace JumpGame
 				DrawStateTwo(gt);
 		}
 
+		public void SetStateInput()
+		{
+			Active = true;
+			state1 = true;
+			input = "ENTER YOUR NAME";
+			firstInput = false;
+		}
+
+		public void SetStateHighscore()
+		{
+
+		}
+
 		private void DrawStateOne(GameTime gt)
 		{
 			game.batch.Begin();
 			game.batch.Draw(nameBack1, namePos1, Color.Black);
 			game.batch.Draw(nameBack2, namePos2, Color.Blue);
 			enterNameText.InnerDraw(gt);
+			nameText.InnerDraw(gt);
 			game.batch.End();
 		}
 
