@@ -18,7 +18,7 @@ namespace JumpGame
 
         public List<Block> blocks;
         
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         private Player player;
         public SpriteBatch batch;
 
@@ -29,17 +29,17 @@ namespace JumpGame
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = SCREENWIDTH;
             graphics.PreferredBackBufferHeight = SCREENHEIGHT;
-            
+            this.blocks = new List<Block>();
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-			Block block = new Block(0, 0, 100, 200, Color.Blue, 20);
+			Block block = new Block(this, new Rectangle(0, 0, 100, 200), Color.Blue, 20);
             player = new Player(this, new Rectangle(512, 384, 32, 32));
             this.Components.Add(player);
             this.Components.Add(block);
-            this.blocks.add(block);
+            this.blocks.Add(block);
             base.Initialize();
 
         }
