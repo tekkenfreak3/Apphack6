@@ -13,7 +13,7 @@ namespace JumpGame
         Player player;
         Jump game;
         private int points;
-        private long int ticks;
+        private int ticks;
         private int speed;
         private Random rng;
         
@@ -44,10 +44,17 @@ namespace JumpGame
         {
             this.ticks++;
 
-            if (this.ticks % 150)
+            if (this.ticks % 150 == 0)
             {
                 
-                Block b1 = new Block(game, this, new Rectangle(0, -30, rng.Next(1024 - 32), 24), )
+                Block b1 = new Block(game, this, new Rectangle(0, -30, rng.Next(1024 - 32), 24), Color.RoyalBlue, 50);
+                Block b2 = new Block(game, this, new Rectangle(b1.rect.X + b1.rect.Width + 48, -30, 1024, 24), Color.RoyalBlue, 50);
+
+                b1.SetPartner(b2);
+                this.blocks.Add(b1);
+                this.blocks.Add(b2);
+                this.game.Components.Add(b1);
+                this.game.Components.Add(b2);
             }
         }
 

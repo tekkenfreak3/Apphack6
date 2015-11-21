@@ -67,7 +67,7 @@ namespace JumpGame
             }
             
             OnKeyboard (new KeyboardStateEventArgs(keystate));
-
+            level.Tick();
             base.Update(gt);
         }
 
