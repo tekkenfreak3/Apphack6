@@ -16,6 +16,7 @@ namespace JumpGame
         {
             public Text text;
             private int lvl;
+
             public Button(Jump game, ILevel level, Rectangle blockRect, Color color, string txt, int lvl)
             : base(game, level, blockRect, color, 0)
             {
@@ -43,6 +44,9 @@ namespace JumpGame
                         case 2:
                             this.game.level = new Level2(game);
                             break;
+							case 3:
+								this.game.level = new Level3 (game);
+							break;
 /*                    case 1:
                       this.game.level = new Level1(game);
                       break;*/
@@ -63,7 +67,7 @@ namespace JumpGame
         public void Init()
         {
             this.game.IsMouseVisible = true;
-            this.buttons = new Button[2];
+            this.buttons = new Button[3];
             this.buttons[0] = new Button(game, this, new Rectangle(100, 352, 200, 64),
                                          Color.RoyalBlue, "Mode 1", 1);
 
@@ -74,6 +78,11 @@ namespace JumpGame
                                              Color.Cyan, "Mode 2", 2);
             this.game.Components.Add(this.buttons[1]);
             this.game.Components.Add(this.buttons[1].text);
+
+			this.buttons[2] = new Button(game, this, new Rectangle(600, 352, 200, 64),
+				Color.YellowGreen, "Mode 3", 3);
+			this.game.Components.Add(this.buttons[2]);
+			this.game.Components.Add(this.buttons[2].text);
 
         }
 

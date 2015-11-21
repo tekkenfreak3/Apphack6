@@ -12,6 +12,7 @@ namespace JumpGame
     
     public class Jump : Game
     {
+		private static GameTime time;
 		private const int SCREENWIDTH = 1024;
 		private const int SCREENHEIGHT = 768;
 		private const bool FULLSCREEN = false;
@@ -30,6 +31,11 @@ namespace JumpGame
             graphics.PreferredBackBufferHeight = SCREENHEIGHT;
             Content.RootDirectory = "Content";
         }
+
+		public static GameTime Time
+		{
+			get { return time; }
+		}
 
         protected override void Initialize()
         {
@@ -60,6 +66,8 @@ namespace JumpGame
         
         protected override void Update(GameTime gt)
         {
+			time = gt;
+
             if (level != lastLevel)
             {
                 level.Init();
