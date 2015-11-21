@@ -22,6 +22,8 @@ namespace JumpGame
         private Random rng;
         private SoundEffect music;
         private SoundEffectInstance musicInstance;
+        private int narrowness;
+        
         public Level2(Jump game)
         {
             this.game = game;
@@ -30,6 +32,8 @@ namespace JumpGame
             this.rng = new Random();
             this.spawnInterval = 64;
             this.tilNext = this.spawnInterval;
+
+            this.narrowness = 16;
         }
 
         public void Init()
@@ -62,7 +66,7 @@ namespace JumpGame
                 
                 Block newBlock = new Block(game, this, new Rectangle(1024, 760
                                                                      - rng.Next((int)((50.0/this.spawnInterval) * 250))
-                                                                     , 4 + rng.Next(46), 768),
+                                                                     , 48 - rng.Next(this.narrowness), 768),
                                            Color.Cyan, this.speed, 0);
                 blocks.Add(newBlock);
                 game.Components.Add(newBlock);
@@ -72,10 +76,15 @@ namespace JumpGame
 
             if (this.ticks % 300 == 0)
             {
-                if (this.speed < -256)
+                if (this.speed > -512)
                 {
-                    this.speed -= 16;
+                    this.speed -= 64;
                 }
+                if (this.narrowness < 44)
+                    this.narrowness += 4;
+                else
+                    this.narrowness = 44;
+
             }
             this.tilNext--;
         }
