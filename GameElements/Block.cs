@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace JumpGame
 {
@@ -36,9 +37,15 @@ namespace JumpGame
 		{
 			int totalTime = (gt.ElapsedGameTime.Milliseconds + leftOverTime);
 			int dropAmount = totalTime / fallSpeed;
-			leftOverTime = totalTime % fallSpeed;
 
+			leftOverTime = totalTime % fallSpeed;
 			rect = new Rectangle(rect.X, rect.Y + dropAmount, rect.Width, rect.Height);
+
+			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferHeight)
+			{
+				Console.WriteLine("KILL BLOCK!!!!");
+				game.Components.Remove(this);
+			}
 		}
 			
 

@@ -39,6 +39,7 @@ namespace JumpGame
         protected bool Collides(JumpSprite other)
         {
 			return rect.Intersects(other.rect);
+
 //            // my x, my y, etc
 //            int mx = this.rect.X;
 //            int my = this.rect.Y;
