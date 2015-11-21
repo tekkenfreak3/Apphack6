@@ -21,7 +21,7 @@ namespace JumpGame
         }
 
         protected override void LoadContent()
-        {
+        {0
             System.Console.WriteLine("\n\n\n\nCONTENT LOADED RIGHT NOW\n\n\n\n");
             this.tex = this.game.Content.Load<Texture2D>("Player");
             if (this.tex == null)

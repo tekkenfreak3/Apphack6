@@ -37,16 +37,6 @@ namespace JumpGame
 			set;
 		}
 
-		public override void Draw(GameTime ft)
-		{
-			if (texture == null)
-			{
-				CreateTexture((int)size.X, (int)size.Y, game.graphics);
-			}
-
-			game.batch.Draw(texture, location, color);
-		}
-
 		public override void Update(GameTime gt)
 		{
 			int dropAmount = (gt.ElapsedGameTime.Milliseconds + leftOverTime)/fallSpeed;
@@ -56,7 +46,7 @@ namespace JumpGame
 
 			location = new Vector2(location.X, location.Y + dropAmount);
 		}
-			
+
 
 		private void CreateTexture(int width, int height, GraphicsDeviceManager g)
 		{

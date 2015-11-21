@@ -36,7 +36,7 @@ namespace JumpGame
 			block = new Block(0, 0, 100, 200, Color.Blue, 20);
             player = new Player(this, new Rectangle(512, 384, 32, 32));
             this.Components.Add(player);
-//                        this.Components.Add(Block);
+            this.Components.Add(block);
             base.Initialize();
 
         }
