@@ -15,6 +15,7 @@ namespace JumpGame
         Player player;
         Jump game;
         private int points;
+        private Text scoreText;
         private int ticks;
         private int spawnInterval;
         private int tilNext;
@@ -32,8 +33,8 @@ namespace JumpGame
             this.rng = new Random();
             this.spawnInterval = 64;
             this.tilNext = this.spawnInterval;
-
             this.narrowness = 16;
+            this.points = 0;
         }
 
         public void Init()
@@ -42,9 +43,13 @@ namespace JumpGame
             game.Components.Add(player);
 
             Block floor = new Block(game, this, new Rectangle(1024 - 48, 768 - 32, 48, 1024), Color.Cyan, this.speed, 0);
+
             blocks.Add(floor);
             game.Components.Add(floor);
 
+            this.scoreText = new Text(game, "Score: " + this.points, new Vector2(0,0), Color.Blue);
+            game.Components.Add(this.scoreText);
+            
             music = this.game.Content.Load<SoundEffect>("home_at_last");
 
             musicInstance = music.CreateInstance();
@@ -59,6 +64,7 @@ namespace JumpGame
         
         public void Tick()
         {
+            this.scoreText.Content = "Score: " + this.points;
             this.ticks++;
 
             if (this.tilNext <= 0)
