@@ -21,18 +21,9 @@ namespace JumpGame
         }
 
         protected override void LoadContent()
-        {0
-            System.Console.WriteLine("\n\n\n\nCONTENT LOADED RIGHT NOW\n\n\n\n");
+        {
             this.tex = this.game.Content.Load<Texture2D>("Player");
-            if (this.tex == null)
-            {
-                System.Console.WriteLine("The fuck? No texture loaded");
-                System.Environment.Exit(1);
-            }
-            else
-            {
-                System.Console.WriteLine("Texture loaded?" + this.tex);
-            }
+
             this.origin = new Vector2(this.tex.Width / 2, this.tex.Height / 2);
         }
 
@@ -40,7 +31,6 @@ namespace JumpGame
         {
             KeyboardState st = args.keyState;
 
-            System.Console.WriteLine("THE INPUT IS REAL");
             if (st.IsKeyDown(Keys.Left))
             {
                 this.xSpeed = -5;
@@ -59,7 +49,11 @@ namespace JumpGame
         public override void Update(GameTime gt)
         {
             // collision detection here
-            
+
+            foreach (Block b in this.game.blocks)
+            {
+                System.Console.WriteLine("There's a block");
+            }
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
         }

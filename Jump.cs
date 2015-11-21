@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,8 +16,10 @@ namespace JumpGame
 		private const int SCREENWIDTH = 1024;
 		private const int SCREENHEIGHT = 768;
 		private const bool FULLSCREEN = false;
+
+        public List<Block> blocks;
+        
         GraphicsDeviceManager graphics;
-		private Block block;
         private Player player;
         public SpriteBatch batch;
 
@@ -33,10 +36,11 @@ namespace JumpGame
 
         protected override void Initialize()
         {
-			block = new Block(0, 0, 100, 200, Color.Blue, 20);
+			Block block = new Block(0, 0, 100, 200, Color.Blue, 20);
             player = new Player(this, new Rectangle(512, 384, 32, 32));
             this.Components.Add(player);
             this.Components.Add(block);
+            this.blocks.add(block);
             base.Initialize();
 
         }
