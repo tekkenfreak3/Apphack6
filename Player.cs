@@ -90,8 +90,10 @@ namespace JumpGame
                 {
                     this.rect.Y = b.rect.Y - this.rect.Height;
                     this.ySpeed = 0;
+                    b.Hit();
                     if (!Keyboard.GetState().IsKeyDown(Keys.Up))
                         this.ground = true;
+                    
 //                    this.xSpeed += b.CalculateX();
                 }
             }
