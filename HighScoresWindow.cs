@@ -106,7 +106,7 @@ namespace JumpGame
 							SetStateHighscore();
 						}
 					}
-					if (pressedKeys[0] == Keys.Back)
+					else if (pressedKeys[0] == Keys.Back)
 					{
 						if (!firstInput)
 						{
@@ -151,7 +151,6 @@ namespace JumpGame
 								}
 
 								nameText.Content += lastKey + "";
-
 
 								break;
 							}
@@ -240,26 +239,35 @@ namespace JumpGame
 				return;
 			}
 				
-			string[] data;
+			string[] data = null;
 
 			highScores.Clear();
 
 			if (curState == 0)
 			{
-				data = File.ReadAllLines(FILEPATH);
+				if (File.Exists(FILEPATH))
+				{
+					data = File.ReadAllLines(FILEPATH);
+				}
 			}
 			else if (curState == 1)
 			{
-				data = File.ReadAllLines(FILEPATH2);
+				if (File.Exists(FILEPATH2))
+				{
+					data = File.ReadAllLines(FILEPATH2);
+				}
 			}
 			else
 			{
-				data = File.ReadAllLines(FILEPATH3);
+				if (File.Exists(FILEPATH3))
+				{
+					data = File.ReadAllLines(FILEPATH3);
+				}
 			}
 
 			char[] delimiter = new char[] { ':' };
 
-			for (int dataIndex = 0; dataIndex < data.Length; dataIndex++)
+			for (int dataIndex = 0; data != null && dataIndex < data.Length; dataIndex++)
 			{
 				string[] tData = data[dataIndex].Split(delimiter);
 
