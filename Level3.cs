@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace JumpGame
 {
@@ -25,6 +26,9 @@ namespace JumpGame
 		private int widthMax = 300; 
 		private int widthVariance = 10; //50 - 268
 		private int widthVarianceStep = 10;
+
+		private SoundEffect music;
+		private SoundEffectInstance musicInstance;
 
 		private bool gameOver;
 		private HighScoresWindow highScore;
@@ -53,6 +57,12 @@ namespace JumpGame
 
 			this.scoreText = new Text(game, "Score: " + this.points, new Vector2(0,0), Color.Blue);
 			game.Components.Add(this.scoreText);
+
+			music = this.game.Content.Load<SoundEffect>("home_at_last");
+
+			musicInstance = music.CreateInstance();
+			musicInstance.IsLooped = true;
+			musicInstance.Play();
 
 			points = 0;
 		}
@@ -117,6 +127,9 @@ namespace JumpGame
 						game.Components.Remove(blocks [0]);
 						blocks.RemoveAt(0);
 					}
+					this.game.Components.Remove(this.player);
+					this.game.Components.Remove(this.scoreText);
+					this.musicInstance.Stop();
 				}
 			}
 		}
