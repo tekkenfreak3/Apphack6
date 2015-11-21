@@ -12,11 +12,11 @@ namespace JumpGame
     {
         private int xSpeed, ySpeed;
         private bool ground;
-        public Player(Jump game, Rectangle rect) : base(game)
+        public Player(Jump game, ILevel level, Rectangle rect) : base(game)
         {
             this.game = game;
             this.rect = rect;
-
+            this.level = level;
             this.game.KeyboardEvent += KeyboardUpdate;
         }
 
@@ -62,7 +62,7 @@ namespace JumpGame
         {
             // collision detection here
 
-            foreach (Block b in this.game.blocks)
+            foreach (Block b in this.level.GetBlocks())
             {
                 Rectangle other = b.rect;
                 

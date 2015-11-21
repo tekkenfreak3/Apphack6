@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 namespace JumpGame
 {
-    interface ILevel
+    public interface ILevel
     {
-        public void Init();
-        public void Tick();
+        void Init();
+        void Tick();
+
+        List<Block> GetBlocks();
     }
 }

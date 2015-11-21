@@ -14,22 +14,24 @@ namespace JumpGame
 	    private int ySpeed = 0;
 		private int leftOverTimeX = 0;
 		private int leftOverTimeY = 0;
-
-		public Block(Jump game, Rectangle blockRect, Color color, int ySpeed) : base(game)
+        
+		public Block(Jump game, ILevel level, Rectangle blockRect, Color color, int ySpeed) : base(game)
 		{
 			this.game = game;
 			this.rect = blockRect;
 			this.color = color;
 			this.ySpeed = ySpeed == 0 ? 0 : (1000 / ySpeed);
+            this.level = level;
 		}
 
-		public Block(Jump game, Rectangle blockRect, Color color, int xSpeed, int ySpeed) : base(game)
+		public Block(Jump game, ILevel level, Rectangle blockRect, Color color, int xSpeed, int ySpeed) : base(game)
 		{
 			this.game = game;
 			this.rect = blockRect;
 			this.color = color;
 			this.xSpeed = xSpeed == 0 ? 0 : (1000 / xSpeed);
 			this.ySpeed = ySpeed == 0 ? 0 : (1000 / ySpeed);
+            this.level = level;
 		}
 
 		public bool Hit
@@ -51,6 +53,7 @@ namespace JumpGame
 			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferHeight)
 			{
 				game.Components.Remove(this);
+                level.GetBlocks().Remove(this);
 			}
 		}
 

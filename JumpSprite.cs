@@ -20,7 +20,8 @@ namespace JumpGame
         protected float direction;
         
         protected Jump game;
-
+        protected ILevel level;
+        
         public JumpSprite(Jump game) : base(game)
         {
         }

@@ -16,12 +16,11 @@ namespace JumpGame
 		private const int SCREENHEIGHT = 768;
 		private const bool FULLSCREEN = false;
 
-        public List<Block> blocks;
-        
         public GraphicsDeviceManager graphics;
-        private Player player;
         public SpriteBatch batch;
 
+        private ILevel level;
+        
         public KeyboardStateEventHandler KeyboardEvent;
         
         public Jump()
@@ -29,17 +28,19 @@ namespace JumpGame
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = SCREENWIDTH;
             graphics.PreferredBackBufferHeight = SCREENHEIGHT;
-            this.blocks = new List<Block>();
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
 //			Block block = new Block(this, new Rectangle(100, 500, 800, 200), Color.Blue, 20);
-            player = new Player(this, new Rectangle(512, 384, 32, 32));
-            this.Components.Add(player);
+//            player = new Player(this, new Rectangle(512, 384, 32, 32));
+//            this.Components.Add(player);
   //          this.Components.Add(block);
     //        this.blocks.Add(block);
+            this.level = new Level1(this);
+
+            this.level.Init();
             base.Initialize();
 
         }
