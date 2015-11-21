@@ -63,11 +63,11 @@ namespace JumpGame
                 this.tilNext = this.spawnInterval;
             }
 
-            if (this.ticks % (this.spawnInterval * 5) == 0)
+            if (this.ticks % (240 * 5) == 0)
             {
-                if (this.spawnInterval > 48)
+                if (this.spawnInterval > 88)
                 {
-                    this.spawnInterval = (int)(this.spawnInterval * 0.80);
+                    this.spawnInterval = (int)(this.spawnInterval * 0.90);
                     Console.WriteLine("Spawn interval is: " + this.spawnInterval);
                 }
 
