@@ -71,7 +71,7 @@ namespace JumpGame
             {
                 
                 Block newBlock = new Block(game, this, new Rectangle(1024, 760
-                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 200))
+                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 100))
                                                                      , 48 - rng.Next(this.narrowness), 768),
                                            Color.Cyan, this.speed, 0);
                 blocks.Add(newBlock);
