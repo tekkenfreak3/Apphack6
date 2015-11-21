@@ -51,10 +51,11 @@ namespace JumpGame
 
 		public override void Update(GameTime gt)
 		{
-			int dropAmount = (gt.ElapsedGameTime.Milliseconds + leftOverTime)/fallSpeed;
-			leftOverTime = gt.ElapsedGameTime.Milliseconds % fallSpeed;
+			int totalTime = (gt.ElapsedGameTime.Milliseconds + leftOverTime);
+			int dropAmount = totalTime / fallSpeed;
+			leftOverTime = totalTime % fallSpeed;
 
-//			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
+			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
 
 			location = new Vector2(location.X, location.Y + dropAmount);
 		}
