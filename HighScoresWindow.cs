@@ -10,6 +10,8 @@ namespace JumpGame
 	public class HighScoresWindow : DrawableGameComponent
 	{
 		private const string FILEPATH = "Highscores.txt";
+		private const string FILEPATH2 = "Highscores2.txt";
+		private const string FILEPATH3 = "Highscores3.txt";
 		private Keys[] keyArray;
 
 		private Jump game;
@@ -19,7 +21,8 @@ namespace JumpGame
 		private Texture2D nameBack1, nameBack2;
 		private Vector2 position1, position2, namePos1, namePos2;
 		private Keys lastKey;
-		private string input = "";
+		private int newScore = 0;
+		private int curState = 0;
 		private bool state1 = true;
 		private bool firstInput = false;
 		
@@ -34,16 +37,6 @@ namespace JumpGame
 		{
 			get;
 			set;
-		}
-
-		public void AddHighscoreEntry(HighscoreEntry entry)
-		{
-			highScores.Add(entry);
-
-//			highScores.Sort( delegate (MyType t1, MyType t2) 
-//			{ 
-//				return (t1.ID.CompareTo(t2.ID)); } 
-//			);
 		}
 		
 		protected override void LoadContent()
@@ -77,7 +70,18 @@ namespace JumpGame
 		public override void Update(GameTime gt)
 		{
 			if (!state1 || !Active)
+			{
+				Keys[] tKeys = Keyboard.GetState().GetPressedKeys();
+				if (tKeys.Length == 1 && tKeys [0] == Keys.Enter && (lastKey == null || lastKey != Keys.Enter))
+				{
+					Active = false;
+				}
+				else if (tKeys.Length != 1)
+				{
+					lastKey = Keys.Add;
+				}
 				return;
+			}
 			
 			KeyboardState state = Keyboard.GetState();
 			Keys[] pressedKeys = state.GetPressedKeys();
@@ -88,6 +92,20 @@ namespace JumpGame
 				{
 					lastKey = pressedKeys[0];
 
+					if (pressedKeys[0] == Keys.Enter)
+					{
+						Console.WriteLine("Enter pressed");
+						if (firstInput && nameText.Content.Length > 1)
+						{
+							Console.WriteLine("SWITCH HIGHSCORE STATES");
+							highScores.Add(new HighscoreEntry (nameText.Content, newScore));
+							highScores.Sort((s1, s2) => s2.Score.CompareTo(s1.Score));
+							while (highScores.Count > 9)
+								highScores.RemoveAt(highScores.Count - 1);
+							SerializeHighScores();
+							SetStateHighscore();
+						}
+					}
 					if (pressedKeys[0] == Keys.Back)
 					{
 						if (!firstInput)
@@ -158,8 +176,11 @@ namespace JumpGame
 				DrawStateTwo(gt);
 		}
 
-		public void SetStateInput()
+		public void SetStateInput(int score, int gameMode)
 		{
+			curState = gameMode < 3 ? gameMode : 0;
+			LoadHighScores();
+			newScore = score;
 			Active = true;
 			state1 = true;
 			input = "ENTER YOUR NAME";
@@ -168,7 +189,10 @@ namespace JumpGame
 
 		public void SetStateHighscore()
 		{
-
+			Active = true;
+			state1 = false;
+			input = "ENTER YOUR NAME";
+			firstInput = false;
 		}
 
 		private void DrawStateOne(GameTime gt)
@@ -215,8 +239,24 @@ namespace JumpGame
 			{
 				return;
 			}
+				
+			string[] data;
 
-			string[] data = File.ReadAllLines(FILEPATH);
+			highScores.Clear();
+
+			if (curState == 0)
+			{
+				data = File.ReadAllLines(FILEPATH);
+			}
+			else if (curState == 1)
+			{
+				data = File.ReadAllLines(FILEPATH2);
+			}
+			else
+			{
+				data = File.ReadAllLines(FILEPATH3);
+			}
+
 			char[] delimiter = new char[] { ':' };
 
 			for (int dataIndex = 0; dataIndex < data.Length; dataIndex++)
@@ -227,29 +267,7 @@ namespace JumpGame
 					highScores.Add(new HighscoreEntry(tData[0], int.Parse(tData[1])));
 			}
 
-//			highScores.Sort(delegate(object a, object b)
-//			{
-//				HighscoreEntry tempA = (HighscoreEntry)a;
-//				HighscoreEntry tempB = (HighscoreEntry)b;
-//
-//				if (tempA.Score > tempB.Score)
-//				{
-//					return 1;
-//				}
-//				else if (tempA.Score < tempB.Score)
-//				{
-//					return -1;
-//				}
-//				return 0;
-//			});
-
-//			parts.Sort(delegate(Part x, Part y)
-//			{
-//				if (x.PartName == null && y.PartName == null) return 0;
-//				else if (x.PartName == null) return -1;
-//				else if (y.PartName == null) return 1;
-//				else return x.PartName.CompareTo(y.PartName);
-//			});
+			highScores.Sort((s1, s2) => s2.Score.CompareTo(s1.Score));
 		}
 
 		private void SerializeHighScores()
@@ -260,8 +278,19 @@ namespace JumpGame
 			{
 				data.Add(entry.Name + ":" + entry.Score);
 			}
-
-			File.WriteAllLines(FILEPATH, data);
+				
+			if (curState == 0)
+			{
+				File.WriteAllLines(FILEPATH, data);
+			}
+			else if (curState == 1)
+			{
+				File.WriteAllLines(FILEPATH2, data);
+			}
+			else
+			{
+				File.WriteAllLines(FILEPATH3, data);
+			}
 		}
 
 		private Texture2D CreateTexture(int width, int height, GraphicsDeviceManager g)
