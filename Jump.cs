@@ -7,16 +7,20 @@ using AppHack6;
 
 namespace JumpGame
 {
+
+    public delegate void KeyboardStateEventHandler(KeyboardStateEventArgs e);
+    
     public class Jump : Game
     {
 		private const int SCREENWIDTH = 1024;
 		private const int SCREENHEIGHT = 768;
 		private const bool FULLSCREEN = false;
         GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
 		private Block block;
         private Player player;
         public SpriteBatch batch;
+
+        public KeyboardStateEventHandler KeyboardEvent;
         
         public Jump()
         {
@@ -29,10 +33,10 @@ namespace JumpGame
 
         protected override void Initialize()
         {
-			spriteBatch = new SpriteBatch (GraphicsDevice);
 			block = new Block(0, 0, 100, 200, Color.Blue, 20);
             player = new Player(this, new Rectangle(512, 384, 32, 32));
             this.Components.Add(player);
+//                        this.Components.Add(Block);
             base.Initialize();
 
         }
@@ -42,14 +46,23 @@ namespace JumpGame
             batch = new SpriteBatch(GraphicsDevice);
             base.LoadContent();
         }
+
+
+        protected virtual void OnKeyboard(KeyboardStateEventArgs args)
+		{
+			if (KeyboardEvent != null)
+				KeyboardEvent (args);
+		}
         
         protected override void Update(GameTime gt)
         {
+            KeyboardState keystate = Keyboard.GetState ();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
-
+            
+            OnKeyboard (new KeyboardStateEventArgs(keystate));
 			block.Update(gt);
 
             base.Update(gt);
@@ -59,10 +72,6 @@ namespace JumpGame
         {
             GraphicsDevice.Clear(Color.HotPink);
 
-
-			spriteBatch.Begin();
-			block.Draw(graphics, spriteBatch);
-			spriteBatch.End();
 
             base.Draw(gt);
         }

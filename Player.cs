@@ -16,6 +16,8 @@ namespace JumpGame
         {
             this.game = game;
             this.rect = rect;
+
+            this.game.KeyboardEvent += KeyboardUpdate;
         }
 
         protected override void LoadContent()
@@ -38,6 +40,7 @@ namespace JumpGame
         {
             KeyboardState st = args.keyState;
 
+            System.Console.WriteLine("THE INPUT IS REAL");
             if (st.IsKeyDown(Keys.Left))
             {
                 this.xSpeed = -5;
@@ -46,11 +49,15 @@ namespace JumpGame
             {
                 this.xSpeed = 5;
             }
+
+            else
+            {
+                this.xSpeed = 0;
+            }
         }
 
         public override void Update(GameTime gt)
         {
-
             // collision detection here
             
             this.rect.X += this.xSpeed;
