@@ -23,6 +23,9 @@ namespace JumpGame
         private Random rng;
         private SoundEffect music;
         private SoundEffectInstance musicInstance;
+        private bool gameOver;
+        private HighScoresWindow highScore;
+        
         public Level1(Jump game)
         {
             this.game = game;
@@ -45,6 +48,9 @@ namespace JumpGame
             this.scoreText = new Text(game, "Score: " + this.points, new Vector2(0,0), Color.Blue);
             game.Components.Add(this.scoreText);
 
+            this.highScore = new HighScoresWindow(game);
+            game.Components.Add(this.highScore);
+            
             music = this.game.Content.Load<SoundEffect>("bamboo");
 
             musicInstance = music.CreateInstance();
@@ -59,6 +65,15 @@ namespace JumpGame
         
         public void Tick()
         {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                if (!this.highScore.Active)
+                {
+                    Environment.Exit(0);
+                }
+            }
+            this.scoreText.Content = "Score: " + this.points;
             this.ticks++;
 
             if (this.tilNext == 0)
@@ -96,6 +111,12 @@ namespace JumpGame
             else if (player.rect.X + player.rect.Width < 0)
             {
                 player.rect.X = 1024;
+            }
+
+            if (player.rect.Y > 1024)
+            {
+                this.gameOver = true;
+                this.highScore.SetStateInput(this.points, 0);
             }
         }
 

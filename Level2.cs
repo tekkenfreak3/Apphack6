@@ -24,6 +24,8 @@ namespace JumpGame
         private SoundEffect music;
         private SoundEffectInstance musicInstance;
         private int narrowness;
+        private bool gameOver;
+        private HighScoresWindow highScore;
         
         public Level2(Jump game)
         {
@@ -49,6 +51,9 @@ namespace JumpGame
 
             this.scoreText = new Text(game, "Score: " + this.points, new Vector2(0,0), Color.Blue);
             game.Components.Add(this.scoreText);
+
+            this.highScore = new HighScoresWindow(game);
+            game.Components.Add(this.highScore);
             
             music = this.game.Content.Load<SoundEffect>("home_at_last");
 
@@ -64,6 +69,13 @@ namespace JumpGame
         
         public void Tick()
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                if (!this.highScore.Active)
+                {
+                    Environment.Exit(0);
+                }
+            }
             this.scoreText.Content = "Score: " + this.points;
             this.ticks++;
 
@@ -93,6 +105,12 @@ namespace JumpGame
 
             }
             this.tilNext--;
+
+            if (player.rect.Y > 1024 || (player.rect.X + player.rect.Width) < 0)
+            {
+                this.gameOver = true;
+                this.highScore.SetStateInput(this.points, 1);
+            }
         }
 
         public void End()
