@@ -46,7 +46,7 @@ namespace JumpGame
 			if ((partner != null && !partner.hit && !hit) 
 				|| (partner == null && !hit))
 			{
-				level.AddPoints(Math.Abs(xSpeed));
+				level.AddPoints(Math.Max(Math.Abs(xSpeed), Math.Abs(ySpeed)));
 			}
 
 			hit = true;

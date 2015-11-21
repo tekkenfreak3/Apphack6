@@ -19,8 +19,8 @@ namespace JumpGame
         public GraphicsDeviceManager graphics;
         public SpriteBatch batch;
 
-        private ILevel level;
-        
+        public ILevel level;
+        private ILevel lastLevel;
         public KeyboardStateEventHandler KeyboardEvent;
         
         public Jump()
@@ -38,8 +38,8 @@ namespace JumpGame
 //            this.Components.Add(player);
   //          this.Components.Add(block);
     //        this.blocks.Add(block);
-            this.level = new Level2(this);
-
+            this.level = new LevelM(this);
+            this.lastLevel = this.level;
             this.level.Init();
             base.Initialize();
 
@@ -60,6 +60,12 @@ namespace JumpGame
         
         protected override void Update(GameTime gt)
         {
+            if (level != lastLevel)
+            {
+                level.Init();
+                lastLevel = level;
+            }
+            
             KeyboardState keystate = Keyboard.GetState ();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
