@@ -89,13 +89,13 @@ namespace JumpGame
 		public int GetXSpeed(GameTime gt)
 		{
 			int totalTime = (gt.ElapsedGameTime.Milliseconds + leftOverTimeX);
-			return totalTime / xSpeed;
+			return xSpeed != 0 ? totalTime / xSpeed : 0;
 		}
 
 		public int GetYSpeed(GameTime gt)
 		{
 			int totalTime = (gt.ElapsedGameTime.Milliseconds + leftOverTimeY);
-			return totalTime / ySpeed;
+            return ySpeed != 0 ? totalTime / ySpeed : 0;
 		}
 
 		private void CalculateAndMoveX(GameTime gt)

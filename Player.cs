@@ -94,10 +94,15 @@ namespace JumpGame
                     if (!Keyboard.GetState().IsKeyDown(Keys.Up))
                         this.ground = true;
                     
-//                    this.xSpeed += b.CalculateX();
+                    this.xSpeed += b.GetXSpeed(gt);
                 }
             }
 
+            if (this.rect.Y < 0)
+            {
+                this.rect.Y = 0;
+                this.ySpeed = 0;
+            }
             if (this.ySpeed < 24)
                 this.ySpeed += 1;
             this.rect.X += this.xSpeed;

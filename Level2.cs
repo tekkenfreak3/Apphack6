@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace JumpGame
 {
-    public class Level1 : ILevel
+    public class Level2 : ILevel
     {
         List<Block> blocks;
         Player player;
@@ -22,11 +22,11 @@ namespace JumpGame
         private Random rng;
         private SoundEffect music;
         private SoundEffectInstance musicInstance;
-        public Level1(Jump game)
+        public Level2(Jump game)
         {
             this.game = game;
             this.blocks = new List<Block>();
-            this.speed = 64;
+            this.speed = -64;
             this.rng = new Random();
             this.spawnInterval = 200;
             this.tilNext = this.spawnInterval;
@@ -34,10 +34,10 @@ namespace JumpGame
 
         public void Init()
         {
-            this.player = new Player(game, this, new Rectangle(512, -32, 32, 32));
+            this.player = new Player(game, this, new Rectangle(128, 768 - 64, 32, 32));
             game.Components.Add(player);
 
-            Block floor = new Block(game, this, new Rectangle(-32, 32, 1024 + 64, 32), Color.RoyalBlue, this.speed);
+            Block floor = new Block(game, this, new Rectangle(128, 768 - 32, 48, 1024), Color.RoyalBlue, this.speed, 0);
             blocks.Add(floor);
             game.Components.Add(floor);
 
@@ -59,16 +59,6 @@ namespace JumpGame
 
             if (this.tilNext == 0)
             {
-                
-                Block b1 = new Block(game, this, new Rectangle(-32, -30, rng.Next(1024), 24), Color.RoyalBlue, this.speed);
-                Block b2 = new Block(game, this, new Rectangle(b1.rect.X + b1.rect.Width + 64, -30, 1024, 24), Color.RoyalBlue, this.speed);
-
-                b1.SetPartner(b2);
-                this.blocks.Add(b1);
-                this.blocks.Add(b2);
-                this.game.Components.Add(b1);
-                this.game.Components.Add(b2);
-
                 this.tilNext = this.spawnInterval;
             }
 

@@ -38,7 +38,7 @@ namespace JumpGame
 //            this.Components.Add(player);
   //          this.Components.Add(block);
     //        this.blocks.Add(block);
-            this.level = new Level1(this);
+            this.level = new Level2(this);
 
             this.level.Init();
             base.Initialize();
