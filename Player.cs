@@ -93,13 +93,9 @@ namespace JumpGame
                     this.ySpeed = 0;
 //                    this.xSpeed += b.CalculateX();
                 }
-                else
-                {
-                    this.ySpeed += 5;
-                }
-
             }
-        
+             
+            this.ySpeed += 5;
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
         }

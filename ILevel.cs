@@ -5,7 +5,7 @@ namespace JumpGame
     {
         void Init();
         void Tick();
-
+        void AddPoints(int points);
         List<Block> GetBlocks();
     }
 }

@@ -12,6 +12,8 @@ namespace JumpGame
         List<Block> blocks;
         Player player;
         Jump game;
+        private int points;
+        
         public Level1(Jump game)
         {
             this.game = game;
@@ -36,6 +38,11 @@ namespace JumpGame
         public void Tick()
         {
             
+        }
+
+        public void AddPoints(int points)
+        {
+            this.points += points;
         }
    } 
 }
