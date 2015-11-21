@@ -73,7 +73,9 @@ namespace JumpGame
             {
                 if (!this.highScore.Active)
                 {
-                    Environment.Exit(0);
+                    this.game.level = new LevelM(this.game);
+                    this.End();
+                    return;
                 }
             }
             this.scoreText.Content = "Score: " + this.points;
@@ -124,6 +126,8 @@ namespace JumpGame
             {
                 this.game.Components.Remove(b);
             }
+            this.game.Components.Remove(this.highScore);
+            this.musicInstance.Stop();
         }
         
         public void AddPoints(int points)

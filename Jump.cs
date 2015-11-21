@@ -67,10 +67,6 @@ namespace JumpGame
             }
             
             KeyboardState keystate = Keyboard.GetState ();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
             
             OnKeyboard (new KeyboardStateEventArgs(keystate));
             level.Tick();
