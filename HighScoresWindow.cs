@@ -20,6 +20,16 @@ namespace JumpGame
 			position1 = new Vector2(312, 84);
 			position2 = new Vector2(327, 99);
 		}
+
+		public void AddHighscoreEntry(HighscoreEntry entry)
+		{
+			highScores.Add(entry);
+
+//			highScores.Sort( delegate (MyType t1, MyType t2) 
+//			{ 
+//				return (t1.ID.CompareTo(t2.ID)); } 
+//			);
+		}
 		
 		protected override void LoadContent()
 		{
