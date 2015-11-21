@@ -61,22 +61,22 @@ namespace JumpGame
         {
             this.ticks++;
 
-            if (this.tilNext == 0)
+            if (this.tilNext <= 0)
             {
                 
                 Block newBlock = new Block(game, this, new Rectangle(1024, 760
-                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 250))
+                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 200))
                                                                      , 48 - rng.Next(this.narrowness), 768),
                                            Color.Cyan, this.speed, 0);
                 blocks.Add(newBlock);
                 game.Components.Add(newBlock);
-                this.tilNext = rng.Next(100) + 50;
+                this.tilNext = rng.Next(100) + 50 - ((-this.speed) / 8);
                 this.spawnInterval = this.tilNext;
             }
 
             if (this.ticks % 300 == 0)
             {
-                if (this.speed > -512)
+                if (this.speed > -256)
                 {
                     this.speed -= 64;
                 }

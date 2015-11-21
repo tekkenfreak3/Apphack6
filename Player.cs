@@ -107,15 +107,6 @@ namespace JumpGame
                 this.ySpeed += 1;
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
-
-            if (this.rect.X > 1024)
-            {
-                this.rect.X = 0 - this.rect.Width;
-            }
-            else if (this.rect.X + this.rect.Width < 0)
-            {
-                this.rect.X = 1024;
-            }
         }
     }
 }

@@ -84,6 +84,15 @@ namespace JumpGame
             }
 
             this.tilNext--;
+
+            if (player.rect.X > 1024)
+            {
+                player.rect.X = 0 - player.rect.Width;
+            }
+            else if (player.rect.X + player.rect.Width < 0)
+            {
+                player.rect.X = 1024;
+            }
         }
 
         public void AddPoints(int points)
