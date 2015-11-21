@@ -12,6 +12,8 @@ namespace JumpGame
     {
         private int xSpeed, ySpeed;
         private bool ground;
+        private float direction;
+        
         public Player(Jump game, ILevel level, Rectangle rect) : base(game)
         {
             this.game = game;
@@ -58,6 +60,20 @@ namespace JumpGame
             }
         }
 
+
+        public override void Draw(GameTime gt)
+        {
+//            base.Draw(gt);
+            Vector2 position = new Vector2((int)(rect.X + (rect.Width / 2)), (int)(rect.Y + (rect.Height / 2)));
+
+            SpriteBatch sprite = this.game.batch;
+            sprite.Begin();
+            sprite.Draw (tex, position, new Rectangle(0, 0, tex.Width, tex.Height), Color.White, direction,
+                         new Vector2(tex.Width / 2, tex.Height / 2),
+                         1.0f, SpriteEffects.None, 0);
+            sprite.End();
+
+        }
         public override void Update(GameTime gt)
         {
 
@@ -90,6 +106,7 @@ namespace JumpGame
                 {
                     this.rect.Y = b.rect.Y - this.rect.Height;
                     this.ySpeed = 0;
+                    this.direction = 0.0f;
                     b.Hit();
                     if (!Keyboard.GetState().IsKeyDown(Keys.Up))
                         this.ground = true;
@@ -105,6 +122,12 @@ namespace JumpGame
             }
             if (this.ySpeed < 24)
                 this.ySpeed += 1;
+
+            if (!this.ground)
+            {
+                this.direction += this.xSpeed;
+            }
+            
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
         }
