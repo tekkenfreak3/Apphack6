@@ -48,7 +48,7 @@ namespace JumpGame
             {
                 if (this.ground)
                 {
-                    this.ySpeed = -32;
+                    this.ySpeed = -24;
                     this.ground = false;
                 }
             }
@@ -56,15 +56,10 @@ namespace JumpGame
             {
                 this.ySpeed = 5;
             }
-            else
-            {
-                this.ySpeed = 0;
-            }
         }
 
         public override void Update(GameTime gt)
         {
-            // collision detection here
 
             foreach (Block b in this.level.GetBlocks())
             {
@@ -72,8 +67,8 @@ namespace JumpGame
                 
                 Rectangle leftRect = new Rectangle(this.rect.X + this.xSpeed, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle rightRect = new Rectangle((this.rect.X + this.rect.Width) + this.xSpeed - 16, this.rect.Y + 8, 16, this.rect.Height - 16);
-                Rectangle topRect = new Rectangle(this.rect.X + 8, this.rect.Y + this.ySpeed, this.rect.Width - 16, 16);
-                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed, this.rect.Width - 16, 16);
+                Rectangle topRect = new Rectangle(this.rect.X, this.rect.Y + this.ySpeed, this.rect.Width, 16);
+                Rectangle bottomRect = new Rectangle(this.rect.X, this.rect.Y  + this.rect.Height + this.ySpeed, this.rect.Width, 16);
                 
                 if (JumpSprite.RectCollides(rightRect, other))
                 {
@@ -99,8 +94,9 @@ namespace JumpGame
 //                    this.xSpeed += b.CalculateX();
                 }
             }
-            
-            this.ySpeed += 2;
+
+            if (this.ySpeed < 24)
+                this.ySpeed += 1;
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
 

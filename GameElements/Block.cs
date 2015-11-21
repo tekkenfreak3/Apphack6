@@ -62,6 +62,22 @@ namespace JumpGame
 			CalculateAndMoveX(gt);
 			CalculateAndMoveY(gt);
 
+            List<Block> blocks = level.GetBlocks();
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                Block b = blocks[i];
+                if (b != this)
+                {
+                    if (this.Collides(b))
+                    {
+                        if (this.rect.Y > b.rect.Y)
+                        {
+                            game.Components.Remove(this);
+                            level.GetBlocks().Remove(this);
+                        }
+                    }
+                }
+            }
 			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferWidth)
 			{
 				game.Components.Remove(this);
