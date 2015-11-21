@@ -9,6 +9,7 @@ endif
 all: run
 
 Jump.exe:
+	rm Jump.exe || echo "Jump not here"
 	mcs $(FLAGS) $(SRC)
 
 run: Jump.exe

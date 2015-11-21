@@ -43,11 +43,10 @@ namespace JumpGame
 
 			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferHeight)
 			{
-				Console.WriteLine("KILL BLOCK!!!!");
 				game.Components.Remove(this);
 			}
 		}
-			
+
 
 		private void CreateTexture(int width, int height, GraphicsDeviceManager g)
 		{
