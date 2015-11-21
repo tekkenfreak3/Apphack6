@@ -80,7 +80,7 @@ namespace JumpGame
             this.game.Components.Add(this.buttons[1].text);
 
 			this.buttons[2] = new Button(game, this, new Rectangle(600, 352, 200, 64),
-				Color.YellowGreen, "Mode 3", 3);
+				Color.SpringGreen, "Mode 3", 3);
 			this.game.Components.Add(this.buttons[2]);
 			this.game.Components.Add(this.buttons[2].text);
 

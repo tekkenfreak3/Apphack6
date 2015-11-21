@@ -89,17 +89,17 @@ namespace JumpGame
             base.Draw(gt);
         }
         
-//        public static void Main()
-//        {
-//            System.Console.WriteLine("Test");
-//            try
-//            {
-//                using (Jump game = new Jump())
-//                    game.Run();
-//            }catch (EntryPointNotFoundException e)
-//            {
-//            }
-//        }
+       public static void Main()
+       {
+           System.Console.WriteLine("Test");
+           try
+           {
+               using (Jump game = new Jump())
+                   game.Run();
+           }catch (EntryPointNotFoundException e)
+           {
+           }
+       }
     }
 
     public class KeyboardStateEventArgs : EventArgs {
