@@ -26,18 +26,18 @@ namespace JumpGame
         {
             this.game = game;
             this.blocks = new List<Block>();
-            this.speed = -64;
+            this.speed = -128;
             this.rng = new Random();
-            this.spawnInterval = 200;
+            this.spawnInterval = 64;
             this.tilNext = this.spawnInterval;
         }
 
         public void Init()
         {
-            this.player = new Player(game, this, new Rectangle(128, 768 - 64, 32, 32));
+            this.player = new Player(game, this, new Rectangle(1024 - 40, 768 - 64, 32, 32));
             game.Components.Add(player);
 
-            Block floor = new Block(game, this, new Rectangle(128, 768 - 32, 48, 1024), Color.RoyalBlue, this.speed, 0);
+            Block floor = new Block(game, this, new Rectangle(1024 - 48, 768 - 32, 48, 1024), Color.Cyan, this.speed, 0);
             blocks.Add(floor);
             game.Components.Add(floor);
 
@@ -59,20 +59,24 @@ namespace JumpGame
 
             if (this.tilNext == 0)
             {
-                this.tilNext = this.spawnInterval;
+                
+                Block newBlock = new Block(game, this, new Rectangle(1024, 760
+                                                                     - rng.Next((int)((50.0/this.spawnInterval) * 500))
+                                                                     , 48, 768),
+                                           Color.Cyan, this.speed, 0);
+                blocks.Add(newBlock);
+                game.Components.Add(newBlock);
+                this.tilNext = rng.Next(120) + 50;
+                this.spawnInterval = this.tilNext;
             }
 
-            if (this.ticks % (200 * 5) == 0)
+            if (this.ticks % 1000 == 0)
             {
-                if (this.spawnInterval > 88)
+                if (this.speed < -256)
                 {
-                    this.spawnInterval = (int)(this.spawnInterval * 0.90);
-                    Console.WriteLine("Spawn interval is: " + this.spawnInterval);
+                    this.speed -= 16;
                 }
-
-
             }
-
             this.tilNext--;
         }
 
