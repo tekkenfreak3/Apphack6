@@ -41,7 +41,7 @@ namespace JumpGame
 		
 		protected override void LoadContent()
 		{
-			Active = true;//For t esting.
+//			Active = true;//For t esting.
 
 			keyArray = new Keys[]
 			{
