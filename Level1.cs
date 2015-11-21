@@ -13,11 +13,16 @@ namespace JumpGame
         Player player;
         Jump game;
         private int points;
+        private long int ticks;
+        private int speed;
+        private Random rng;
         
         public Level1(Jump game)
         {
             this.game = game;
             this.blocks = new List<Block>();
+            this.speed = 4;
+            this.rng = new Random();
         }
 
         public void Init()
@@ -37,7 +42,13 @@ namespace JumpGame
         
         public void Tick()
         {
-            
+            this.ticks++;
+
+            if (this.ticks % 150)
+            {
+                
+                Block b1 = new Block(game, this, new Rectangle(0, -30, rng.Next(1024 - 32), 24), )
+            }
         }
 
         public void AddPoints(int points)

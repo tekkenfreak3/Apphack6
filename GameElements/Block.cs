@@ -50,7 +50,7 @@ namespace JumpGame
 			CalculateAndMoveX(gt);
 			CalculateAndMoveY(gt);
 
-			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferHeight)
+			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferWidth)
 			{
 				game.Components.Remove(this);
                 level.GetBlocks().Remove(this);
