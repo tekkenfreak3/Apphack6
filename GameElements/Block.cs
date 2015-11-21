@@ -20,7 +20,6 @@ namespace JumpGame
 			this.game = game;
 			this.rect = blockRect;
 			this.color = color;
-//			this.xSpeed = xSpeed == 0 ? 0 : (1000 / xSpeed);
 			this.ySpeed = ySpeed == 0 ? 0 : (1000 / ySpeed);
 		}
 
