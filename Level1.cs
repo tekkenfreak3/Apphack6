@@ -40,9 +40,10 @@ namespace JumpGame
             blocks.Add(floor);
             game.Components.Add(floor);
 
-            music = this.game.Content.Load<Song>("bamboo_cactus");
+            music = this.game.Content.Load<Song>("bamboo");
             MediaPlayer.Play(music);
-            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 1.0f;
+            
         }
 
         public List<Block> GetBlocks()
