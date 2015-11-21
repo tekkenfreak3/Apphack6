@@ -1,34 +1,25 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace JumpGame
 {
 	public class Block : JumpSprite
 	{
-		private Jump game;
-		private Texture2D texture = null;
-		private Vector2 size;
-		private Vector2 location;
 		private Color color;
 
 		//Speed is pixels per second.
 		private int fallSpeed;
 		private int leftOverTime = 0;
 
-		public Block(Jump game, int x, int y, int width, int height, Color color, int fallSpeed) : base(game)
+		public Block(Jump game, Rectangle blockRect, Color color, int fallSpeed) : base(game)
 		{
 			this.game = game;
-			size = new Vector2(width, height);
-			location = new Vector2(x, y);
+			this.rect = blockRect;
 			this.color = color;
 			this.fallSpeed = (1000/fallSpeed);
-		}
-
-		public Vector2 Location
-		{
-			get { return location; }
-			set { location = value; }
+			Console.WriteLine("fallspeed: " + this.fallSpeed);
 		}
 
 		public bool DestroyMe
@@ -37,28 +28,37 @@ namespace JumpGame
 			set;
 		}
 
+		protected override void LoadContent()
+		{
+			CreateTexture(rect.Width, rect.Height, game.graphics);
+		}
+
 		public override void Update(GameTime gt)
 		{
-			int dropAmount = (gt.ElapsedGameTime.Milliseconds + leftOverTime)/fallSpeed;
-			leftOverTime = gt.ElapsedGameTime.Milliseconds % fallSpeed;
+			int totalTime = (gt.ElapsedGameTime.Milliseconds + leftOverTime);
+			int dropAmount = totalTime / fallSpeed;
 
-			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
+			leftOverTime = totalTime % fallSpeed;
+			rect = new Rectangle(rect.X, rect.Y + dropAmount, rect.Width, rect.Height);
 
-			location = new Vector2(location.X, location.Y + dropAmount);
+			if (rect.Y > game.graphics.PreferredBackBufferHeight || rect.X > game.graphics.PreferredBackBufferHeight)
+			{
+				game.Components.Remove(this);
+			}
 		}
 
 
 		private void CreateTexture(int width, int height, GraphicsDeviceManager g)
 		{
-			texture = new Texture2D(g.GraphicsDevice, width, height);
+			tex = new Texture2D(g.GraphicsDevice, width, height);
 			Color[] data = new Color[width*height];
 
 			for (int i = 0; i < data.Length; ++i)
 			{
-				data [i] = Color.White;
+				data [i] = color;
 			}
 
-			texture.SetData(data);
+			tex.SetData(data);
 		}
 	}
 }
