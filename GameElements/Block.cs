@@ -23,6 +23,7 @@ namespace JumpGame
 			location = new Vector2(x, y);
 			this.color = color;
 			this.fallSpeed = (1000/fallSpeed);
+			Console.WriteLine("fallspeed: " + this.fallSpeed);
 		}
 
 		public Vector2 Location
@@ -43,8 +44,9 @@ namespace JumpGame
 			{
 				CreateTexture((int)size.X, (int)size.Y, game.graphics);
 			}
-
+			game.batch.Begin();
 			game.batch.Draw(texture, location, color);
+			game.batch.End();
 		}
 
 		public override void Update(GameTime gt)
@@ -52,7 +54,7 @@ namespace JumpGame
 			int dropAmount = (gt.ElapsedGameTime.Milliseconds + leftOverTime)/fallSpeed;
 			leftOverTime = gt.ElapsedGameTime.Milliseconds % fallSpeed;
 
-			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
+//			Console.WriteLine("Update called: " + dropAmount + " leftover: " + leftOverTime);
 
 			location = new Vector2(location.X, location.Y + dropAmount);
 		}
