@@ -46,7 +46,11 @@ namespace JumpGame
 
             if (st.IsKeyDown(Keys.Up))
             {
-                this.ySpeed = -20;
+                if (this.ground)
+                {
+                    this.ySpeed = -32;
+                    this.ground = false;
+                }
             }
             else if (st.IsKeyDown(Keys.Down))
             {
@@ -69,7 +73,7 @@ namespace JumpGame
                 Rectangle leftRect = new Rectangle(this.rect.X + this.xSpeed, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle rightRect = new Rectangle((this.rect.X + this.rect.Width) + this.xSpeed - 16, this.rect.Y + 8, 16, this.rect.Height - 16);
                 Rectangle topRect = new Rectangle(this.rect.X + 8, this.rect.Y + this.ySpeed, this.rect.Width - 16, 16);
-                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed - 10, this.rect.Width - 16, 16);
+                Rectangle bottomRect = new Rectangle(this.rect.X  + 8, this.rect.Y  + this.rect.Height + this.ySpeed, this.rect.Width - 16, 16);
                 
                 if (JumpSprite.RectCollides(rightRect, other))
                 {
@@ -89,15 +93,25 @@ namespace JumpGame
                 }
                 else if (JumpSprite.RectCollides(bottomRect, other))
                 {
-                    this.rect.Y = b.rect.Y - this.rect.Height + 1;
+                    this.rect.Y = b.rect.Y - this.rect.Height;
                     this.ySpeed = 0;
+                    this.ground = true;
 //                    this.xSpeed += b.CalculateX();
                 }
             }
-             
-            this.ySpeed += 5;
+            
+            this.ySpeed += 2;
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;
+
+            if (this.rect.X > 1024)
+            {
+                this.rect.X = 0 - this.rect.Width;
+            }
+            else if (this.rect.X + this.rect.Width < 0)
+            {
+                this.rect.X = 1024;
+            }
         }
     }
 }
