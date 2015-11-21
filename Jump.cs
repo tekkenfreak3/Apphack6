@@ -15,6 +15,7 @@ namespace JumpGame
         GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		private Block block;
+        private Player player;
         public SpriteBatch batch;
         
         public Jump()
@@ -30,14 +31,18 @@ namespace JumpGame
         {
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 			block = new Block(0, 0, 100, 200, Color.Blue, 20);
-
+            player = new Player(this, new Rectangle(512, 384, 32, 32));
+            this.Components.Add(player);
             base.Initialize();
+
         }
 
         protected override void LoadContent()
         {
             batch = new SpriteBatch(GraphicsDevice);
+            base.LoadContent();
         }
+        
         protected override void Update(GameTime gt)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -82,4 +87,5 @@ namespace JumpGame
 		}
 		public KeyboardState keyState { get; set;}
 	}
+    
 }

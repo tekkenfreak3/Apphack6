@@ -29,6 +29,7 @@ namespace JumpGame
         {
             Vector2 position = new Vector2((int)rect.X, (int)rect.Y);
 
+            System.Console.WriteLine("TEXTURE: " + this.tex);
             SpriteBatch sprite = this.game.batch;
             sprite.Begin();
             sprite.Draw (tex, position, Color.White);

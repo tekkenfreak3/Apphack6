@@ -16,12 +16,21 @@ namespace JumpGame
         {
             this.game = game;
             this.rect = rect;
-            this.direction = 0;
         }
 
         protected override void LoadContent()
         {
+            System.Console.WriteLine("\n\n\n\nCONTENT LOADED RIGHT NOW\n\n\n\n");
             this.tex = this.game.Content.Load<Texture2D>("Player");
+            if (this.tex == null)
+            {
+                System.Console.WriteLine("The fuck? No texture loaded");
+                System.Environment.Exit(1);
+            }
+            else
+            {
+                System.Console.WriteLine("Texture loaded?" + this.tex);
+            }
             this.origin = new Vector2(this.tex.Width / 2, this.tex.Height / 2);
         }
 
