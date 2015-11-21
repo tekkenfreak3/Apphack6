@@ -1,5 +1,5 @@
 PLAT = Unix
-SRC = Jump.cs JumpSprite.cs Player.cs ILevel.cs Level1.cs GameElements/Block.cs
+SRC = Jump.cs JumpSprite.cs Player.cs ILevel.cs Level1.cs GameElements/Block.cs HighscoreEntry.cs HighScoresWindow.cs
 ifeq ($(PLAT), Unix)
 	EXTERN = extern/unix
 	FLAGS += -reference:"$(EXTERN)/MonoGame.Framework" -reference:"$(EXTERN)/Tao.Sdl.dll" -g
