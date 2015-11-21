@@ -183,7 +183,7 @@ namespace JumpGame
 			newScore = score;
 			Active = true;
 			state1 = true;
-			input = "ENTER YOUR NAME";
+			enterNameText.Content = "ENTER YOUR NAME";
 			firstInput = false;
 		}
 
@@ -191,7 +191,7 @@ namespace JumpGame
 		{
 			Active = true;
 			state1 = false;
-			input = "ENTER YOUR NAME";
+			enterNameText.Content = "ENTER YOUR NAME";
 			firstInput = false;
 		}
 
