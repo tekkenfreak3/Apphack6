@@ -22,7 +22,7 @@ namespace JumpGame
 			Console.WriteLine("fallspeed: " + this.fallSpeed);
 		}
 
-		public bool DestroyMe
+		public bool Hit
 		{
 			get;
 			set;
