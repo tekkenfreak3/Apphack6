@@ -115,8 +115,11 @@ namespace JumpGame
 
             if (player.rect.Y > 1024)
             {
-                this.gameOver = true;
-                this.highScore.SetStateInput(this.points, 0);
+                if (!this.gameOver)
+                {
+                    this.gameOver = true;
+                    this.highScore.SetStateInput(this.points, 0);
+                }
             }
         }
 
