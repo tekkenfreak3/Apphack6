@@ -2,24 +2,33 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using AppHack6;
 
 namespace JumpGame
 {
     public class Jump : Game
     {
+		private const int SCREENWIDTH = 1024;
+		private const int SCREENHEIGHT = 768;
+		private const bool FULLSCREEN = false;
         GraphicsDeviceManager graphics;
-        
+		SpriteBatch spriteBatch;
+		private Block block;
+
         public Jump()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = SCREENWIDTH;
+            graphics.PreferredBackBufferHeight = SCREENHEIGHT;
             
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
+			spriteBatch = new SpriteBatch (GraphicsDevice);
+			block = new Block(0, 0, 100, 200, Color.Blue, 20);
+
             base.Initialize();
         }
 
@@ -30,12 +39,20 @@ namespace JumpGame
                 Exit();
             }
 
+			block.Update(gt);
+
             base.Update(gt);
         }
 
         protected override void Draw(GameTime gt)
         {
             GraphicsDevice.Clear(Color.HotPink);
+
+
+			spriteBatch.Begin();
+			block.Draw(graphics, spriteBatch);
+			spriteBatch.End();
+
             base.Draw(gt);
         }
         
