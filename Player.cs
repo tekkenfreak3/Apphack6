@@ -64,7 +64,12 @@ namespace JumpGame
 
             foreach (Block b in this.game.blocks)
             {
-                System.Console.WriteLine("There's a block");
+                if (this.Collides(b))
+                {
+                    System.Console.WriteLine("There's a block");
+                    this.xSpeed = 0;
+                    this.ySpeed = 0;
+                }
             }
             this.rect.X += this.xSpeed;
             this.rect.Y += this.ySpeed;

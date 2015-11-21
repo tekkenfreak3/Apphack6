@@ -8,11 +8,11 @@ endif
 
 all: run
 
-Jump.exe:
+
+run:
 	rm Jump.exe || echo "Jump not here"
 	mcs $(FLAGS) $(SRC)
 
-run: Jump.exe
 	$(POST);
 	mono ./Jump.exe
 	rm *.dll
