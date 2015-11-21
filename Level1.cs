@@ -15,6 +15,7 @@ namespace JumpGame
         Player player;
         Jump game;
         private int points;
+        private Text scoreText;
         private int ticks;
         private int spawnInterval;
         private int tilNext;
@@ -40,6 +41,9 @@ namespace JumpGame
             Block floor = new Block(game, this, new Rectangle(-32, 32, 1024 + 64, 32), Color.RoyalBlue, this.speed);
             blocks.Add(floor);
             game.Components.Add(floor);
+
+            this.scoreText = new Text(game, "Score: " + this.points, new Vector2(0,0), Color.Blue);
+            game.Components.Add(this.scoreText);
 
             music = this.game.Content.Load<SoundEffect>("bamboo");
 
@@ -95,6 +99,16 @@ namespace JumpGame
             }
         }
 
+        public void End()
+        {
+            this.game.Components.Remove(this.player);
+            this.game.Components.Remove(this.scoreText);
+            foreach (Block b in this.blocks)
+            {
+                this.game.Components.Remove(b);
+            }
+        }
+        
         public void AddPoints(int points)
         {
             this.points += points;

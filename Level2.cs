@@ -95,6 +95,16 @@ namespace JumpGame
             this.tilNext--;
         }
 
+        public void End()
+        {
+            this.game.Components.Remove(this.player);
+            this.game.Components.Remove(this.scoreText);
+            foreach (Block b in this.blocks)
+            {
+                this.game.Components.Remove(b);
+            }
+        }
+        
         public void AddPoints(int points)
         {
             this.points += points;
