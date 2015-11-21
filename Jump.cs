@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,7 @@ namespace JumpGame
     public class Jump : Game
     {
         GraphicsDeviceManager graphics;
+        public SpriteBatch batch;
         
         public Jump()
         {
@@ -23,6 +25,10 @@ namespace JumpGame
             base.Initialize();
         }
 
+        protected override void LoadContent()
+        {
+            batch = new SpriteBatch(GraphicsDevice);
+        }
         protected override void Update(GameTime gt)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -48,8 +54,15 @@ namespace JumpGame
                     game.Run();
             }catch (EntryPointNotFoundException e)
             {
-                Console.WriteLine("The fuck is an entry point?");
             }
         }
     }
+
+    public class KeyboardStateEventArgs : EventArgs {
+		public KeyboardStateEventArgs(KeyboardState state) : base()
+		{
+			keyState = state;
+		}
+		public KeyboardState keyState { get; set;}
+	}
 }
